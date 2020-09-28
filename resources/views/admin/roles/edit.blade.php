@@ -88,7 +88,7 @@
                                     class='btn btn-danger'
                                     @if(!$role->permissions->contains($permission))
                                         disabled
-                                     @endif>Attach</button>
+                                     @endif>Detach</button>
                                     </form>
                                 </td>
 
