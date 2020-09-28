@@ -1,8 +1,25 @@
+<script src="toastr.js"></script>
 <x-admin-master>
 
     @section('content')
 
+
     <div class="row">
+        @if(session()->has('role-delete-message'))
+
+        <div class="alert alert-danger">
+            {{session('role-delete-message')}}
+        </div>
+
+        @elseif(session()->has('role-updated-message'))
+        <div class="alert alert-success">
+            {{session('role-updated-message')}}
+        </div>
+        @endif
+    </div>
+
+    <div class="row">
+
       <div class="col-sm-3">
         <form action="{{route('roles.store')}}" method="post">
               @csrf
@@ -57,7 +74,7 @@
                         @foreach ($roles as $role)
                             <tr>
                                 <td>{{$role->id}}</td>
-                                <td>{{$role->name}}</td>
+                                <td><a href="{{route('roles.edit', $role)}}">{{$role->name}}</a></td>
                                 <td>{{$role->slug}}</td>
                                 <td>
                                     <form action="{{route('roles.destroy', $role->id)}}" method="post">
