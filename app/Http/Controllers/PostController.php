@@ -41,7 +41,6 @@ class PostController extends Controller
             request('post_image')->move('images', $inputs['post_image']);
         }
 
-
         auth()->user()->posts()->create($inputs);
 
         session()->flash('post-create-message', 'Post was created successfully!');
