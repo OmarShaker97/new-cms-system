@@ -4,7 +4,7 @@
     
     <div class="row">
         <div class="col-sm-6">
-            <h1>Edit Role: {{$role->name}}</h1>
+            <h3>Edit Role: {{$role->name}}</h3>
 
             <form action="{{route('roles.update', $role->id)}}" method="post">
                 @csrf

@@ -40,8 +40,9 @@ class UserController extends Controller
         ]);
 
         if(request('avatar')){
-            $inputs['avatar'] = request('avatar')->store('images', 'public');
+            $inputs['avatar'] = request('avatar')->store('images');
             $user->avatar = $inputs['avatar'];
+            request('avatar')->move('images', $inputs['avatar']);
          }
 
         $user->update($inputs);
