@@ -1,13 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Session;
-
-
 use App\Post;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -22,7 +19,9 @@ class PostController extends Controller
         
         $this->authorize('create', Post::class);
 
-        return view('admin.posts.create');
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     public function store(Request $request){
@@ -35,7 +34,6 @@ class PostController extends Controller
             'title'=>'required | min:8 | max:255',
             'post_image' => 'file',
             'body' => 'required'
-        
             ]);
 
         if(request('post_image')){
@@ -68,7 +66,9 @@ class PostController extends Controller
 
         $this->authorize('view', $post);
 
-        return view('admin.posts.edit', ['post'=>$post]);
+        $categories = Category::all();
+
+        return view('admin.posts.edit', ['post'=>$post, 'categories'=>$categories]);
 
     }
 

@@ -30,6 +30,7 @@
                   <th>ID</th>
                   <th>User</th>
                   <th>Title</th>
+                  <th>Category</th>
                   <th>Image</th>
                   <th>Created At</th>
                   <th>Updated At</th>
@@ -41,6 +42,7 @@
                    <th>ID</th>
                    <th>User</th>
                    <th>Title</th>
+                   <th>Category</th>
                    <th>Image</th>
                    <th>Created At</th>
                    <th>Updated At</th>
@@ -66,6 +68,10 @@
                       @else
                         {{$post->title}}
                       @endif
+                    </td>
+
+                    <td>
+                      {{$post->category ? $post->category->name : 'Uncategorized'}}
                     </td>
                     
                     <td>

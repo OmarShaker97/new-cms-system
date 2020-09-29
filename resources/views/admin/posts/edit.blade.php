@@ -19,6 +19,17 @@
                 value="{{$post->title}}">
         
         </div>
+
+        <div class="form-group">
+            <label for="category">Category</label>
+                <select name="category" id="category" class="form-control">
+                    @foreach($categories as $category)
+                        <option value="{{$category->name}}">{{$category->name}}</option>
+                    @endforeach
+                </select>
+            </label>
+        </div>
+
         <div class="form-group">
             <div><img height="100px" src="{{$post->post_image}}" alt=""></div>
             <label for="file">File</label>
