@@ -28,13 +28,14 @@ class PostController extends Controller
         
         $this->authorize('create', Post::class);
 
-        // dd(request('post_image'));
+        //dd($request);
 
         $inputs = request()->validate([
             'title'=>'required | min:8 | max:255',
             'post_image' => 'file',
-            'body' => 'required'
-            ]);
+            'body' => 'required',
+            'category_id' => 'required'
+        ]);
 
         if(request('post_image')){
             $inputs['post_image'] = request('post_image')->store('images');
@@ -87,7 +88,8 @@ class PostController extends Controller
         $inputs = request()->validate([
             'title'=>'required | min:8 | max:255',
             'post_image' => 'file',
-            'body' => 'required'
+            'body' => 'required',
+            'category_id' => 'required'
         ]);
         
         if(request('post_image')){
