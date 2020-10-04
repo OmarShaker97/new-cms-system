@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Post;
 
+use App\Category;
+
 class HomeController extends Controller
 {
     /**
@@ -28,8 +30,16 @@ class HomeController extends Controller
     public function index()
     {
 
-        $posts = DB::table('posts')->paginate(15);
+        $posts = Post::paginate(15);
+        $categories = Category::paginate(3);
 
-        return view('home', ['posts'=> $posts]);
+        return view('home', compact(['posts','categories']));
+    }
+
+    public function displayCategory(Category $category){
+        $posts = Post::where('category_id', '=', $category->id)->paginate(15);
+        $categories = DB::table('categories')->paginate(3, ['*'], 'categories');
+
+        return view('home', compact(['posts','categories']));
     }
 }

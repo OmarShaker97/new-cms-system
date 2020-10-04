@@ -1,10 +1,10 @@
 <?php
 
 namespace App;
-
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Category;
+use App\Comment;
 
 class Post extends Model
 {
@@ -33,6 +33,10 @@ class Post extends Model
         }
         
         return asset($value);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 
 

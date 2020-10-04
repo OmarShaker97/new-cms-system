@@ -32,6 +32,7 @@
                   <th>Title</th>
                   <th>Category</th>
                   <th>Image</th>
+                  <th>View Post</th>
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Delete</th>
@@ -44,6 +45,7 @@
                    <th>Title</th>
                    <th>Category</th>
                    <th>Image</th>
+                   <th>View Post</th>
                    <th>Created At</th>
                    <th>Updated At</th>
                    <th>Delete</th>
@@ -77,7 +79,9 @@
                     <td>
                         <img src="{{$post->post_image}}" height="40px" alt="">
                     </td>
-                    
+                    <td>
+                      <a href="{{route('post',$post->id)}}">View Post</a>
+                    </td>
                     <td>
                         {{$post->created_at->diffForHumans()}}
                     </td>
@@ -85,6 +89,7 @@
                     <td>
                         {{$post->updated_at->diffForHumans()}}
                     </td>
+                    
                     <td>
 
                       @can('view',$post)

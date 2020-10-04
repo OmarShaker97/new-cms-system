@@ -17,7 +17,7 @@
       <a href="{{route('post',$post->id)}}" class="btn btn-primary">Read More &rarr;</a>
     </div>
     <div class="card-footer text-muted">
-     Posted on {{$post->created_at}}
+      Posted on {{$post->created_at->diffForHumans()}} by {{$post->user->name}}
     </div>
   </div>
 
@@ -41,5 +41,24 @@
   </ul>
 
 @endsection
+
+
+      @section('categories')
+        @foreach($categories as $category)
+        <li>
+          <a href="{{route('home.displayCategory', $category->id)}}">{{$category->name}}</a>
+        </li>
+        @endforeach
+      
+      @endsection
+
+      @section('categories-paginate')
+      <div class="d-flex">
+        <div class="mx-auto">
+          {{$categories->links()}}
+        </div>
+      </div>
+      @endsection
+
 
 </x-home-master>

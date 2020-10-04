@@ -9,6 +9,7 @@
         <a class="collapse-item" href="{{route('roles.index')}}">Roles</a>
         <a class="collapse-item" href="{{route('permissions.index')}}">Permissions</a>
         <a class="collapse-item" href="{{route('categories.index')}}">Categories</a>
+        <a class="collapse-item" href="{{route('comments.index')}}">Comments</a>
       </div>
     </div>
   </li>

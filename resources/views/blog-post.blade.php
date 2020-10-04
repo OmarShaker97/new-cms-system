@@ -28,54 +28,98 @@
          </p>
 
          <hr>
+
+         @if(Session::has('comment-message'))
+
+         <div class="alert alert-success">
+         {{session('comment-message')}}
+         </div>
+
+         @endif
  
+         @if(Auth::check())
          <!-- Comments Form -->
          <div class="card my-4">
            <h5 class="card-header">Leave a Comment:</h5>
            <div class="card-body">
-             <form>
+            <form action="{{route('comments.store')}}" enctype="multipart/form-data" method="post">
+              @method('POST')
+              @csrf
+
+              <input type="hidden" name="post_id" value="{{$post->id}}">
+
                <div class="form-group">
-                 <textarea class="form-control" rows="3"></textarea>
+                 <textarea class="form-control" rows="3" name='body' id='body'></textarea>
                </div>
                <button type="submit" class="btn btn-primary">Submit</button>
              </form>
            </div>
          </div>
- 
+         @endif
+
+         @if(count($comments)>0)
+
+          @foreach ($comments as $comment)
+              
+            @if($comment->is_active==1)
+         
          <!-- Single Comment -->
          <div class="media mb-4">
-           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+         <img class="d-flex mr-3 rounded-circle" src="{{$comment->photo}}" alt="" height="50px" width="50px">
            <div class="media-body">
-             <h5 class="mt-0">Commenter Name</h5>
-             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-           </div>
-         </div>
- 
-         <!-- Comment with nested comments -->
-         <div class="media mb-4">
-           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-           <div class="media-body">
-             <h5 class="mt-0">Commenter Name</h5>
-             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
- 
-             <div class="media mt-4">
-               <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-               <div class="media-body">
-                 <h5 class="mt-0">Commenter Name</h5>
-                 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+             <h5 class="mt-0">{{$comment->author}}</h5>
+             {{$comment->body}}
+             
+            
+            </form>
+
+            @if (count($comment->replies) > 0)
+                
+              @foreach ($comment->replies as $reply)
+
+                <!-- Nested Comment -->
+              <div class="media mt-4">
+                <img class="d-flex mr-3 rounded-circle" src="{{$reply->photo}}" alt="" height="50px" width="50px">
+                <div class="media-body">
+                  <h5 class="mt-0">{{$reply->author}}</h5>
+                  {{$reply->body}}
+                </div>
+              </div>
+              <!-- End Nested Comment -->
+
+              @endforeach
+
+              @endif
+
+              <div class="media mt-4">
+                <form action="{{route("replies.createReply")}}" method="post" >
+                 @method('POST')
+                 @csrf
+                 
+                 <input type="hidden" name="comment_id" value="{{$comment->id}}">
+       
+                 <div class="form-group">
+                   <textarea class="form-control" rows="1" cols="250" name='body' id='body'></textarea>
+                 </div>
+                 <div class="form-group">
+                 <button type="submit" class="btn btn-primary">Reply</button>
                </div>
              </div>
- 
-             <div class="media mt-4">
-               <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-               <div class="media-body">
-                 <h5 class="mt-0">Commenter Name</h5>
-                 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-               </div>
-             </div>
- 
            </div>
          </div>
+
+         
+
+          @endif
+ 
+         @endforeach
+      
+
+         @else
+
+         <h1>No Comments </h1>
+
+         @endif
     @endsection
 
 </x-home-master>
